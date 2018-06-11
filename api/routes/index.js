@@ -13,7 +13,8 @@ router.get("/", function(req, res, next) {
 
 router.get("/date", function(req, res, next) {
   const date = new Date().toISOString();
-  res.send({ comingFromApi: date });
+  const message = `The time is: ${date}`;
+  res.send({ comingFromApi: message });
 });
 
 module.exports = router;
