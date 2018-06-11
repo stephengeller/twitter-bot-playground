@@ -26,4 +26,4 @@ function postToTwitter(message) {
 
 axios.get(url).then(r => {
 	postToTwitter(r.data.comingFromApi);
-});
+}).catch(err => console.log(err));
