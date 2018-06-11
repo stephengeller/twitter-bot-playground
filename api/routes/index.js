@@ -15,7 +15,7 @@ router.get("/insult", function(req, res, next) {
   let url = "https://insult.mattbas.org/api/adjective/json";
   axios.get(url).then(r => {
     const message = r.data;
-    console.log(message);
+    console.log(r);
     res.send({ comingFromApi: message });
   });
 });

@@ -23,7 +23,7 @@ let idiots = [
 ];
 
 let idiot = idiots[Math.floor(Math.random() * idiots.length)];
-let url = "http://localhost:3000/date";
+let url = "http://localhost:3000/insult";
 
 function postToTwitter(message) {
   bot.post("statuses/update", { status: message }, (err, data, response) => {
