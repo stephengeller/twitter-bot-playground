@@ -9,9 +9,20 @@ const bot = new Twit({
   timeout_ms: 60 * 1000
 });
 
-let arr = ["foo", "bar", "baz"];
-let item = arr[Math.floor(Math.random() * arr.length)];
-let d = new Date();
+let idiots = [
+  "Max",
+  "Pie",
+  "Ollie",
+  "Joel",
+  "Billy",
+  "Pob",
+  "Ricky",
+  "Tom",
+  "Rufus",
+  "Poiters"
+];
+
+let idiot = idiots[Math.floor(Math.random() * idiots.length)];
 let url = "http://localhost:3000/date";
 
 function postToTwitter(message) {
@@ -27,7 +38,7 @@ function postToTwitter(message) {
 axios
   .get(url)
   .then(r => {
-    const post = r.data.comingFromApi;
+    const post = `${idiot} is ${r.data.comingFromApi}`;
     postToTwitter(post);
   })
   .catch(err => console.log(err));

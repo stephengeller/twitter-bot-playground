@@ -11,6 +11,15 @@ router.get("/", function(req, res, next) {
   });
 });
 
+router.get("/insult", function(req, res, next) {
+  let url = "https://insult.mattbas.org/api/adjective/json";
+  axios.get(url).then(r => {
+    const message = r.data;
+    console.log(message);
+    res.send({ comingFromApi: message });
+  });
+});
+
 router.get("/date", function(req, res, next) {
   const date = new Date().toISOString();
   const message = `The time is: ${date}`;
