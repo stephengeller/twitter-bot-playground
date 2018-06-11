@@ -1,7 +1,7 @@
-var Twit = require('twit');
-var axios = require('axios');
+const Twit = require('twit');
+const axios = require('axios');
 
-var bot = new Twit({
+const bot = new Twit({
 	consumer_key: process.env.TWITTER_CONSUMER_KEY,
 	consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
 	access_token: process.env.TWITTER_ACCESS_TOKEN,
@@ -10,7 +10,7 @@ var bot = new Twit({
 });
 
 let arr = ['foo', 'bar', 'baz'];
-var item = arr[Math.floor(Math.random() * arr.length)];
+let item = arr[Math.floor(Math.random() * arr.length)];
 let d = new Date();
 let url = 'http://localhost:3000/data';
 
