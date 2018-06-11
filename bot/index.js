@@ -12,7 +12,7 @@ const bot = new Twit({
 let arr = ['foo', 'bar', 'baz'];
 let item = arr[Math.floor(Math.random() * arr.length)];
 let d = new Date();
-let url = 'http://localhost:3000/data';
+let url = 'http://localhost:3000/';
 
 function postToTwitter(message) {
 	bot.post('statuses/update', { status: message }, (err, data, response) => {
