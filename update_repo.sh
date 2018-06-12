@@ -2,6 +2,13 @@
 
 git pull --rebase
 
-cd api && npm i
+echo "updating api"
+cd api
+pwd
+npm i
 
-cd ../bot && npm i
+
+echo "updating bot"
+cd ../bot
+pwd
+npm i
