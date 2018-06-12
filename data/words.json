@@ -1,0 +1,30 @@
+[
+	{
+		"wordToReplace": "resigns",
+		"wordToAdd": "decides to bounce"
+	},
+	{
+		"wordToReplace": "Brexiteers",
+		"wordToAdd": "fucking idiots"
+	},
+	{
+		"wordToReplace": "Brexit",
+		"wordToAdd": "FuckOuttaEuro"
+	},
+	{
+		"wordToReplace": "actor",
+		"wordToAdd": "pretendyperson"
+	},
+	{
+		"wordToReplace": "murder",
+		"wordToAdd": "do the kill kill on"
+	},
+	{
+		"wordToReplace": "Trump",
+		"wordToAdd": "StupidMcPumpkinFace"
+	},
+	{
+		"wordToReplace": "memes",
+		"wordToAdd": "dank maymays"
+	}
+]
