@@ -6,7 +6,7 @@ router.get('/', function(req, res) {
 	let url = 'https://jsonplaceholder.typicode.com/posts';
 	axios.get(url).then(r => {
 		const message = r.data[0].title;
-		res.send({ message: message });
+		res.send({ response: message });
 	});
 });
 
@@ -28,14 +28,14 @@ router.get('/insult', function(req, res) {
 	axios.get(url).then(r => {
 		const message = `${idiot} is ${r.data}`;
 		console.log(`${message} was sent`);
-		res.send({ message: message });
+		res.send({ response: message });
 	});
 });
 
 router.get('/date', function(req, res) {
 	const date = new Date().toISOString();
 	const message = `The time is: ${date}`;
-	res.send({ message: message });
+	res.send({ response: message });
 });
 
 const randomise = arr => {

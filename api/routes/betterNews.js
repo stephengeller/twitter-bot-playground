@@ -1,25 +1,38 @@
-var express = require('express');
-var router = express.Router();
-var axios = require('axios');
-var dotenv = require('dotenv').config();
-
-// axios.defaults.headers.common['Authorization'] = process.env.NEWS_API_KEY;
+const express = require('express');
+const router = express.Router();
+const axios = require('axios');
+const NewsAPI = require('newsapi');
+const dotenv = require('dotenv').config();
+const StringReplacer = require('../src/stringReplacer');
 
 router.get('/', function(req, res) {
-	let headers = `?country=gb&apiKey=${process.env.NEWS_API_KEY}`;
-	let url = 'https://newsapi.org/v2/top-headlines' + headers;
-	axios
-		.get(url, headers)
-		.then(r => {
-			const { articles } = r.data;
-			articles.forEach(article => console.log(article.title));
-			res.send({ message: 'news' });
-		})
-		.catch(err => console.log(err.response.data));
-});
+	const apiKey = process.env.NEWS_API_KEY;
+	const stringReplacer = new StringReplacer();
+	const newsapi = new NewsAPI(apiKey);
 
-const replaceWordInString = (string, oldWord, newWord) => {
-	return string.replace(oldWord, newWord);
-};
+	newsapi.v2
+		.topHeadlines({
+			country: 'gb'
+		})
+		.then(response => {
+			const { articles } = response;
+			articles.forEach(article => {
+				let title = article.title
+					.replaceAll('resigns', 'decides to bounce')
+					.replaceAll('Brexiteers', 'fucking idiots')
+					.replaceAll('Brexit', 'FuckOuttaEuro')
+					.replaceAll('actor', 'pretendyperson')
+					.replaceAll('Trump', 'StupidMcPumpkinFace')
+					.replaceAll('memes', 'dank maymays');
+				console.log(title);
+				console.log(article.url, '\n');
+			});
+			res.send({ response: true });
+		})
+		.catch(err => {
+			console.log(err);
+			res.send({ response: false });
+		});
+});
 
 module.exports = router;

@@ -9,7 +9,7 @@ const bot = new Twit({
 	timeout_ms: 60 * 1000
 });
 
-let url = 'http://localhost:3000/insult';
+const url = 'http://localhost:3000/insult';
 
 const postToTwitter = message => {
 	bot.post('statuses/update', { status: message }, (err, data, response) => {
@@ -21,10 +21,14 @@ const postToTwitter = message => {
 	});
 };
 
-axios
-	.get(url)
-	.then(r => {
-		const post = r.data.message;
-		postToTwitter(post);
-	})
-	.catch(err => console.log(err));
+const getDataFromAPI = url => {
+	axios
+		.get(url)
+		.then(r => {
+			const post = r.data.response;
+			postToTwitter(post);
+		})
+		.catch(err => console.log(err));
+};
+
+getDataFromAPI(url);
