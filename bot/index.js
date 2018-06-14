@@ -1,8 +1,8 @@
 const Twit = require('twit')
 const axios = require('axios')
 const dotenv = require('dotenv').config()
-const endpoint = 'betterNews/synonyms'
-const url = 'http://localhost:3000/betterNews/antonyms'
+const endpoint = 'betterNews/antonyms'
+const url = `http://localhost:3000/${endpoint}`
 const {
 	TWITTER_CONSUMER_KEY,
 	TWITTER_CONSUMER_SECRET,
@@ -46,8 +46,7 @@ const getDataFromAPI = url => {
 		.then(r => {
 			const post = r.data.response
 			if (endpoint == 'betterNews/synonyms') {
-				console.log(createNewsTweet(post))
-				// postToTwitter(createNewsTweet(post))
+				postToTwitter(createNewsTweet(post))
 			} else {
 				postToTwitter(post)
 			}
