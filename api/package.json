@@ -12,6 +12,7 @@
 	"dependencies": {
 		"http-errors": "^1.6.3",
 		"newsapi": "^2.2.2",
+		"synonyms": "^1.0.1",
 		"twit": "^2.2.10"
 	},
 	"devDependencies": {
@@ -20,6 +21,7 @@
 		"dotenv": "^6.0.0",
 		"ejs": "^2.6.1",
 		"express": "^4.16.3",
+		"jest": "^23.1.0",
 		"morgan": "^1.9.0",
 		"nodemon": "^1.17.5"
 	}
