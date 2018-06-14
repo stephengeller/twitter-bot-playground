@@ -2,7 +2,7 @@ const Twit = require('twit')
 const axios = require('axios')
 const dotenv = require('dotenv').config()
 const endpoint = 'betterNews/synonyms'
-const url = 'http://localhost:3000/betterNews/synonyms'
+const url = 'http://localhost:3000/betterNews/antonyms'
 const {
 	TWITTER_CONSUMER_KEY,
 	TWITTER_CONSUMER_SECRET,
@@ -34,13 +34,6 @@ const postToTwitter = message => {
 	})
 }
 
-// console.log(
-// 	TWITTER_CONSUMER_KEY,
-// 	TWITTER_CONSUMER_SECRET,
-// 	TWITTER_ACCESS_TOKEN,
-// 	TWITTER_ACCESS_TOKEN_SECRET
-// )
-
 const createNewsTweet = article => {
 	const { source, title, url } = article
 	const newsTweet = `${source.name.toUpperCase()}: ${title} (${url})`
@@ -53,7 +46,8 @@ const getDataFromAPI = url => {
 		.then(r => {
 			const post = r.data.response
 			if (endpoint == 'betterNews/synonyms') {
-				postToTwitter(createNewsTweet(post))
+				console.log(createNewsTweet(post))
+				// postToTwitter(createNewsTweet(post))
 			} else {
 				postToTwitter(post)
 			}

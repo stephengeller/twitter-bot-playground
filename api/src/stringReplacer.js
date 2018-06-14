@@ -49,17 +49,22 @@ class StringReplacer {
 
 	async wordsWithSynonyms(stringOfWords, type) {
 		let array = stringOfWords.split(' ')
-		let format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
 
 		for (let i in array) {
 			let word = array[i]
-			if (!format.test(word) && word.length > 2) {
+			if (!this.wordContainsSpecialChars(word) && word.length > 2) {
 				array[i] = await this.wordWithSynonym(word, type)
 			}
 		}
+
 		const finalString = array.join(' ')
 		console.log(`${stringOfWords} => ${finalString}`)
 		return finalString
+	}
+
+	wordContainsSpecialChars(word) {
+		let format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
+		return format.test(word)
 	}
 }
 

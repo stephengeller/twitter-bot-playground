@@ -34,7 +34,8 @@ router.get('/', (req, res) => {
 		})
 })
 
-router.get('/synonyms', async (req, res) => {
+router.get('/:wordType', async (req, res) => {
+	const { wordType } = req.params
 	await newsapi.v2
 		.topHeadlines({
 			country: 'gb'
@@ -44,27 +45,7 @@ router.get('/synonyms', async (req, res) => {
 			const randomArticle = randomise(articles)
 			randomArticle.title = await stringReplacer.wordsWithSynonyms(
 				randomArticle.title,
-				'synonyms'
-			)
-			res.send({ response: randomArticle })
-		})
-		.catch(err => {
-			console.log(err)
-			res.send({ response: false, err: err })
-		})
-})
-
-router.get('/antonyms', async (req, res) => {
-	await newsapi.v2
-		.topHeadlines({
-			country: 'gb'
-		})
-		.then(async response => {
-			const { articles } = response
-			const randomArticle = randomise(articles)
-			randomArticle.title = await stringReplacer.wordsWithSynonyms(
-				randomArticle.title,
-				'antonyms'
+				wordType
 			)
 			res.send({ response: randomArticle })
 		})
