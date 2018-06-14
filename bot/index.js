@@ -34,6 +34,13 @@ const postToTwitter = message => {
 	})
 }
 
+// console.log(
+// 	TWITTER_CONSUMER_KEY,
+// 	TWITTER_CONSUMER_SECRET,
+// 	TWITTER_ACCESS_TOKEN,
+// 	TWITTER_ACCESS_TOKEN_SECRET
+// )
+
 const createNewsTweet = article => {
 	const { source, title, url } = article
 	const newsTweet = `${source.name.toUpperCase()}: ${title} (${url})`

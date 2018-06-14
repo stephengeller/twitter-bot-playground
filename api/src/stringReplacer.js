@@ -29,32 +29,32 @@ class StringReplacer {
 		return string.replace(oldWord, newWord)
 	}
 
-	async wordWithSynonym(word) {
-		let wordURL = `${this.url}/${word}/synonyms`
+	async wordWithSynonym(word, type) {
+		let wordURL = `${this.url}/${word}/${type}`
 		let finalWord = ''
 		return axios
 			.get(wordURL, this.headers)
 			.then(r => {
-				if (r.data && r.data.synonyms && r.data.synonyms.length > 0) {
-					return randomise(r.data.synonyms)
+				if (r.data[type] && r.data[type].length > 0) {
+					return randomise(r.data[type])
 				} else {
 					return word
 				}
 			})
 			.catch(err => {
-				console.log(`"${word}": ${err}`)
+				console.log(`"${word}": ${err.response.data.message}`)
 				return word
 			})
 	}
 
-	async wordsWithSynonyms(stringOfWords) {
+	async wordsWithSynonyms(stringOfWords, type) {
 		let array = stringOfWords.split(' ')
 		let format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
 
 		for (let i in array) {
 			let word = array[i]
-			if (!format.test(word) && word == word.toLowerCase() && word.length > 4) {
-				array[i] = await this.wordWithSynonym(word)
+			if (!format.test(word) && word.length > 2) {
+				array[i] = await this.wordWithSynonym(word, type)
 			}
 		}
 		const finalString = array.join(' ')
