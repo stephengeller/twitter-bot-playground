@@ -4,6 +4,13 @@ const dotenv = require('dotenv').config()
 
 const {TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET} = process.env
 
+const d = new Date();
+const time = d.toLocaleTimeString();
+const date = d.toLocaleDateString();
+const dateAndTime = `${date} ${time}`
+
+
+
 // console.log(TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
 
 const bot = new Twit({
@@ -21,7 +28,7 @@ const postToTwitter = message => {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log(data.text + ' was tweeted');
+			console.log(dateAndTime + ": ****" + `"${data.text}"` + ' was tweeted ****');
 		}
 	});
 };
