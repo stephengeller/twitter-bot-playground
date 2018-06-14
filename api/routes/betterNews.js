@@ -4,11 +4,13 @@ const NewsAPI = require('newsapi')
 const dotenv = require('dotenv').config()
 const StringReplacer = require('../src/stringReplacer')
 const jsonData = require('../../data/words.json')
+const { randomise } = require('../src/helperFunctions')
+
 const apiKey = process.env.NEWS_API_KEY
 const stringReplacer = new StringReplacer()
 const newsapi = new NewsAPI(apiKey)
 
-router.get('/', function(req, res) {
+router.get('/', (req, res) => {
 	let responseData = []
 
 	newsapi.v2
@@ -32,23 +34,21 @@ router.get('/', function(req, res) {
 		})
 })
 
-router.get('/synonyms', function(req, res) {
-	let ammendedString = ''
-
-	newsapi.v2
+router.get('/synonyms', async (req, res) => {
+	await newsapi.v2
 		.topHeadlines({
 			country: 'gb'
 		})
-		.then(response => {
+		.then(async response => {
 			const { articles } = response
-			articles.map(article => {
-				ammendedString = stringReplacer.wordsWithSynonyms(article.title)
-				console.log(ammendedString + '\n\n')
-				return ammendedString
-			})
-			res.send({ response: articles })
+			const randomArticle = randomise(articles)
+			randomArticle.title = await stringReplacer.wordsWithSynonyms(
+				randomArticle.title
+			)
+			res.send({ response: randomArticle })
 		})
 		.catch(err => {
+			console.log(err)
 			res.send({ response: false, err: err })
 		})
 })
