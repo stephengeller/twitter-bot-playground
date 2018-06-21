@@ -1,7 +1,7 @@
 const DatabaseManager = require("./databaseManager");
 
 class TweetValidator {
-  constructor(db) {
+  constructor(db = "testDB") {
     this.databaseManager = new DatabaseManager(db);
   }
 
@@ -13,18 +13,17 @@ class TweetValidator {
     return str1.toLowerCase() === str2.toLowerCase();
   }
 
-  async catchTweetInDB(tweet, collection, callback) {
+  catchTweetInDB(tweet, collection, callback) {
+    if (typeof tweet !== "object") {
+      throw new Error("please pass tweet object type");
+    }
     let found = false;
-    let blah;
-    blah = await this.databaseManager.findOne(tweet, collection, function(r) {
-      console.log(r);
-      blah = r;
+    this.databaseManager.findOne(tweet, collection, function(r) {
       if (r != null) {
         found = true;
       }
+      callback(!found);
     });
-    console.log(blah);
-    return found;
   }
 }
 

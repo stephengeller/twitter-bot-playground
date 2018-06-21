@@ -52,19 +52,17 @@ describe("catchTweetInDB", () => {
     let result;
     await tweetValidator.catchTweetInDB(tweet, testCollection, r => {
       result = r;
+      expect(result).toBeFalsy();
     });
-    console.log(result);
-    expect(result).toBeFalsy();
   });
 
-  test("returns true if string is not found in DB", () => {
-    const tweet = { tweet: "in DB" };
+  test("returns true if string is not found in DB", async () => {
+    const tweet = { tweet: "NOT in DB" };
     let result;
-    tweetValidator.catchTweetInDB(tweet, testCollection, r => {
+    await tweetValidator.catchTweetInDB(tweet, testCollection, r => {
       result = r;
+      expect(result).toBeTruthy();
     });
-    console.log(result);
-    expect(result).toBeTruthy();
   });
 });
 
@@ -73,10 +71,9 @@ beforeEach(() => {
 });
 
 beforeAll(() => {
-  dbManager.dropCollectionIfExists(testCollection);
-  dbManager.createCollectionIfExists(testCollection);
+  // dbManager.createCollectionIfExists(testCollection);
 });
 
-// afterAll(() => {
-//   dbManager.dropCollectionIfExists(testCollection);
-// });
+afterAll(() => {
+  // dbManager.dropCollectionIfExists(testCollection);
+});
