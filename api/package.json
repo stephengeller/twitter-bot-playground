@@ -11,6 +11,9 @@
 	"license": "ISC",
 	"dependencies": {
 		"http-errors": "^1.6.3",
+		"mongodb": "^3.0.10",
+		"mongojs": "^2.6.0",
+		"mongoose": "^5.1.6",
 		"newsapi": "^2.2.2",
 		"synonyms": "^1.0.1",
 		"twit": "^2.2.10"
