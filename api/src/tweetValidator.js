@@ -5,8 +5,16 @@ class TweetValidator {
     this.databaseManager = new DatabaseManager(db);
   }
 
-  catchBadWords(string, word) {
+  catchBadWord(string, word) {
     return string.toLowerCase().includes(word.toLowerCase());
+  }
+
+  catchBadWords(string, arr) {
+    for (let w in arr) {
+      if (this.catchBadWord(string, arr[w])) {
+        return true;
+      }
+    }
   }
 
   catchNoChanges(str1, str2) {

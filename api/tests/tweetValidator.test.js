@@ -5,23 +5,55 @@ const testCollection = "testCollection";
 
 let tweetValidator = new TweetValidator();
 
-describe("catchBadWords", () => {
+describe("catchBadWord", () => {
   test("returns true if bad word is found in string", () => {
     const badWord = "foo";
     const string = "Here is a headline with the word foo in it";
-    expect(tweetValidator.catchBadWords(string, badWord)).toBeTruthy();
+    expect(tweetValidator.catchBadWord(string, badWord)).toBeTruthy();
   });
 
   test("returns true if bad word is found with different case", () => {
     const badWord = "FOo";
     const string = "Here is a headline with the word foo in it";
-    expect(tweetValidator.catchBadWords(string, badWord)).toBeTruthy();
+    expect(tweetValidator.catchBadWord(string, badWord)).toBeTruthy();
   });
 
   test("returns true if bad word is not found in string", () => {
     const badWord = "foo";
     const string = "Here is a headline without the word in it";
-    expect(tweetValidator.catchBadWords(string, badWord)).toBeFalsy();
+    expect(tweetValidator.catchBadWord(string, badWord)).toBeFalsy();
+  });
+});
+
+describe("catchBadWords", () => {
+  test("returns true if word in array is found in string", () => {
+    const arrOfBannedWords = ["foo", "baz", "bar"];
+    const string = "Here is a headline with the word foo in it";
+    expect(tweetValidator.catchBadWords(string, arrOfBannedWords)).toBeTruthy();
+  });
+
+  test("returns true if bad word is found with different case", () => {
+    const arrOfBannedWords = ["FoO", "baz", "bar"];
+    const string = "Here is a headline with the word foo in it";
+    expect(tweetValidator.catchBadWords(string, arrOfBannedWords)).toBeTruthy();
+  });
+
+  test("works with one item", () => {
+    const arrOfBannedWords = ["foo"];
+    const string = "Here is a headline with the word foo in it";
+    expect(tweetValidator.catchBadWords(string, arrOfBannedWords)).toBeTruthy();
+  });
+
+  test("works with multiple found items", () => {
+    const arrOfBannedWords = ["foo", "bar"];
+    const string = "Here is a headline with the word foo and bar in it";
+    expect(tweetValidator.catchBadWords(string, arrOfBannedWords)).toBeTruthy();
+  });
+
+  test("returns true if bad word is not found in string", () => {
+    const arrOfBannedWords = ["foo"];
+    const string = "Here is a headline without the word in it";
+    expect(tweetValidator.catchBadWords(string, arrOfBannedWords)).toBeFalsy();
   });
 });
 
