@@ -18,7 +18,8 @@ find * -name '*.test.js' | grep -v "node_modules"| while read testfile
 
 
 if [[ ${ERROR_FLAG} ]]; then
-    echo "Failing tests!"
+    echo -e "\n==============\n"
+    echo -e "*************\nFailing tests!\n************"
 else
     echo "All tests passing!"
 fi

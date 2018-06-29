@@ -9,51 +9,61 @@ describe("catchBadWord", () => {
   test("returns true if bad word is found in string", () => {
     const badWord = "foo";
     const string = "Here is a headline with the word foo in it";
-    expect(tweetValidator.catchBadWord(string, badWord)).toBeTruthy();
+    expect(tweetValidator.catchBadWord(string, badWord)).toBe(true);
   });
 
   test("returns true if bad word is found with different case", () => {
     const badWord = "FOo";
     const string = "Here is a headline with the word foo in it";
-    expect(tweetValidator.catchBadWord(string, badWord)).toBeTruthy();
+    expect(tweetValidator.catchBadWord(string, badWord)).toBe(true);
   });
 
-  test("returns true if bad word is not found in string", () => {
+  test("returns false if bad word is not found in string", () => {
     const badWord = "foo";
     const string = "Here is a headline without the word in it";
-    expect(tweetValidator.catchBadWord(string, badWord)).toBeFalsy();
+    expect(tweetValidator.catchBadWord(string, badWord)).toBe(false);
   });
 });
 
-describe("catchBadWords", () => {
-  test("returns true if word in array is found in string", () => {
+describe("ensureNoBadWords", () => {
+  test("returns false if word in array is found in string", () => {
     const arrOfBannedWords = ["foo", "baz", "bar"];
     const string = "Here is a headline with the word foo in it";
-    expect(tweetValidator.catchBadWords(string, arrOfBannedWords)).toBeTruthy();
+    expect(tweetValidator.ensureNoBadWords(string, arrOfBannedWords)).toBe(
+      false
+    );
   });
 
-  test("returns true if bad word is found with different case", () => {
+  test("returns false if bad word is found with different case", () => {
     const arrOfBannedWords = ["FoO", "baz", "bar"];
     const string = "Here is a headline with the word foo in it";
-    expect(tweetValidator.catchBadWords(string, arrOfBannedWords)).toBeTruthy();
+    expect(tweetValidator.ensureNoBadWords(string, arrOfBannedWords)).toBe(
+      false
+    );
   });
 
   test("works with one item", () => {
     const arrOfBannedWords = ["foo"];
     const string = "Here is a headline with the word foo in it";
-    expect(tweetValidator.catchBadWords(string, arrOfBannedWords)).toBeTruthy();
+    expect(tweetValidator.ensureNoBadWords(string, arrOfBannedWords)).toBe(
+      false
+    );
   });
 
   test("works with multiple found items", () => {
     const arrOfBannedWords = ["foo", "bar"];
     const string = "Here is a headline with the word foo and bar in it";
-    expect(tweetValidator.catchBadWords(string, arrOfBannedWords)).toBeTruthy();
+    expect(tweetValidator.ensureNoBadWords(string, arrOfBannedWords)).toBe(
+      false
+    );
   });
 
   test("returns true if bad word is not found in string", () => {
     const arrOfBannedWords = ["foo"];
     const string = "Here is a headline without the word in it";
-    expect(tweetValidator.catchBadWords(string, arrOfBannedWords)).toBeFalsy();
+    expect(tweetValidator.ensureNoBadWords(string, arrOfBannedWords)).toBe(
+      true
+    );
   });
 });
 
@@ -61,19 +71,19 @@ describe("catchNoChanges", () => {
   test("returns true if string not changed by external", () => {
     const oldString = "Here is the same headline";
     const newString = "Here is the same headline";
-    expect(tweetValidator.catchNoChanges(oldString, newString)).toBeTruthy();
+    expect(tweetValidator.catchNoChanges(oldString, newString)).toBe(true);
   });
 
   test("returns false if string changed by external", () => {
     const oldString = "Here is the same headline";
     const newString = "Here is a different headline";
-    expect(tweetValidator.catchNoChanges(oldString, newString)).toBeFalsy();
+    expect(tweetValidator.catchNoChanges(oldString, newString)).toBe(false);
   });
 
   test("returns true if string not changed with different punctuation", () => {
     const oldString = "Here is the same headline";
     const newString = "Here is the same Headline";
-    expect(tweetValidator.catchNoChanges(oldString, newString)).toBeTruthy();
+    expect(tweetValidator.catchNoChanges(oldString, newString)).toBe(true);
   });
 });
 
@@ -84,7 +94,7 @@ describe("catchTweetInDB", () => {
     let result;
     await tweetValidator.catchTweetInDB(tweet, testCollection, r => {
       result = r;
-      expect(result).toBeFalsy();
+      expect(result).toBe(false);
     });
   });
 
@@ -93,7 +103,7 @@ describe("catchTweetInDB", () => {
     let result;
     await tweetValidator.catchTweetInDB(tweet, testCollection, r => {
       result = r;
-      expect(result).toBeTruthy();
+      expect(result).toBe(true);
     });
   });
 });

@@ -1,4 +1,5 @@
 const DatabaseManager = require("./databaseManager");
+const BadWords = require("../../data/bannedWords");
 
 class TweetValidator {
   constructor(db = "testDB") {
@@ -9,12 +10,14 @@ class TweetValidator {
     return string.toLowerCase().includes(word.toLowerCase());
   }
 
-  catchBadWords(string, arr) {
+  ensureNoBadWords(string, arr) {
     for (let w in arr) {
       if (this.catchBadWord(string, arr[w])) {
-        return true;
+        console.log(`${arr[w]} found in ${string}`);
+        return false;
       }
     }
+    return true;
   }
 
   catchNoChanges(str1, str2) {
@@ -32,6 +35,14 @@ class TweetValidator {
       }
       callback(!found);
     });
+  }
+
+  validateTweetBefore(tweet) {
+    return !this.ensureNoBadWords(tweet, BadWords);
+  }
+
+  validateTweetAfter(original, changed) {
+    return !this.catchNoChanges(original, changed);
   }
 }
 
